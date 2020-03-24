@@ -29,23 +29,28 @@ export class ProductListComponent implements OnInit, AfterViewInit {
   constructor(private productService: ProductService) { }
 
 
-
-
   ngOnInit(): void {
     this.productService.getProducts().subscribe(
       (products: IProduct[]) => {
         this.products = products;
-        this.performFilter(this.filterComponent.listFilter);
+        this.performFilter();
       },
       (error: any) => this.errorMessage = <any>error
     );
   }
 
+
   toggleImage(): void {
     this.showImage = !this.showImage;
   }
+
+
   ngAfterViewInit() {
   // console.log(this.filterElementRef.nativeElement)
+  }
+
+  onValueChange(value:string):void{
+    this.performFilter(value)
   }
 
   performFilter(filterBy?: string): void {

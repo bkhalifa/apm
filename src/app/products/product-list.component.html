@@ -8,8 +8,9 @@
         <div class="row">
           <pm-criteria [displayDetails]="displayData" #filterCriteria
                       [hitCount]="filteredProducts?.length"
+                      (valueChange)='onValueChange($event)'
           class="col-md-10">   </pm-criteria>
-  {{filterCriteria.listFilter}}
+
         </div>
 
         <div class='table-responsive'>

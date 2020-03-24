@@ -1,4 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input,
+  OnChanges, SimpleChanges, EventEmitter, Output } from '@angular/core';
+
 
 @Component({
   selector: 'pm-criteria',
@@ -6,20 +8,26 @@ import { Component, OnInit, ViewChild, ElementRef, Input, OnChanges } from '@ang
   styleUrls: ['./criteria.component.css']
 })
 export class CriteriaComponent implements OnInit, OnChanges {
-  listFilter: string;
-
   hitMessage: string;
-  @Input() displayDetails: boolean = false
+  @Input() displayDetails: boolean = false;
   @Input() hitCount: number;
   @ViewChild('filterElement') filterElementRef: ElementRef
 
+  @Output() valueChange :EventEmitter<string> = new EventEmitter<string>();
 
+ private _listFilter: string;
+ get listFilter():string{
+   return this._listFilter;
+ }
+set listFilter(value: string){
+  this._listFilter = value;
+  this.valueChange.emit(value)
+}
   // private _hitCount:number;
 
   // get hitCount():number{
   //   return this._hitCount;
   // }
-
 
   // @Input()
   // set hitCount(value: number){
@@ -33,7 +41,7 @@ export class CriteriaComponent implements OnInit, OnChanges {
 
   constructor() { }
 
-  ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
     if (changes['hitCount'] && !changes['hitCount'].currentValue) {
       this.hitMessage = 'No matches found !'
     } else {
