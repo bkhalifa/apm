@@ -12,13 +12,18 @@ import { IProduct } from './product';
 @Injectable()
 export class ProductService {
     private productsUrl = 'api/products';
+    private products: IProduct[];
 
     constructor(private http: HttpClient) { }
 
     getProducts(): Observable<IProduct[]> {
+      if(this.products){
+        return of(this.products);
+      }
         return this.http.get<IProduct[]>(this.productsUrl)
                         .pipe(
-                            tap(data => console.log(JSON.stringify(data))),
+                            // tap(data => console.log(JSON.stringify(data))),
+                            tap(data => this.products = data),
                             catchError(this.handleError)
                         );
     }
@@ -27,10 +32,16 @@ export class ProductService {
         if (id === 0) {
             return of(this.initializeProduct());
         }
+        if(this.products){
+          let foundProduct = this.products.find(item=>item.id==id);
+          if(!!foundProduct){
+                 return of(foundProduct)
+          }
+        }
         const url = `${this.productsUrl}/${id}`;
         return this.http.get<IProduct>(url)
                         .pipe(
-                            tap(data => console.log('Data: ' + JSON.stringify(data))),
+                             tap(data => console.log('Data: ' + JSON.stringify(data))),
                             catchError(this.handleError)
                         );
     }
