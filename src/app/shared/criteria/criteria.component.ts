@@ -16,9 +16,11 @@ export class CriteriaComponent implements OnInit, OnChanges {
   @Output() valueChange :EventEmitter<string> = new EventEmitter<string>();
 
  private _listFilter: string;
+
  get listFilter():string{
    return this._listFilter;
  }
+
 set listFilter(value: string){
   this._listFilter = value;
   this.valueChange.emit(value)
