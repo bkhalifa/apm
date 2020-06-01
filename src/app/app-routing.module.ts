@@ -17,7 +17,7 @@ import { PageNotFoundComponent } from './home/page-not-found.component';
                     { path: 'welcome', component: WelcomeComponent },
                     {
                         path: 'products',
-                        // canActivate: [AuthGuard],
+                        canActivate: [AuthGuard],
                         loadChildren: './products/product.module#ProductModule'
                     },
                     { path: '', redirectTo: 'welcome', pathMatch: 'full' },

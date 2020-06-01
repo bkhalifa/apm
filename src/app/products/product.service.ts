@@ -19,7 +19,7 @@ export class ProductService {
     // -- basic state management
     // currentProduct :IProduct | null
 
- //-- state management with notificatio
+    //-- state management with notificatio
    private selectedProductSource = new BehaviorSubject<IProduct | null>(null);
    selectedProductChanges$ = this.selectedProductSource.asObservable();
 
